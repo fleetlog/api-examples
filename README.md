@@ -7,7 +7,7 @@
 
 ### Run the app
 ```
-    node app
+    node app FLEETLOG_CLIENT_ID=<YOUR_CLIENT_ID> FLEETLOG_CLIENT_SECRET=<YOUR_CLIENT_SECRET>
 ```
 
 Open `localhost:3001` in your browser.
