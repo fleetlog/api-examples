@@ -1,11 +1,11 @@
 {
-  "name": "fleetlog-oauth-example",
-  "description": "Fleetlog Example App",
-  "version": "0.0.1",
+  "name": "api-examples",
+  "description": "Fleetlog Example Apps",
+  "version": "0.0.2",
   "author": {
     "name": "Viktor Sincak",
     "email": "viktor@fleetlog.com.au",
-    "url": "https://www.fleetlog.com.au"
+    "url": "https://fleetlog.com.au"
   },
   "license": "Apache-2.0",
   "dependencies": {
