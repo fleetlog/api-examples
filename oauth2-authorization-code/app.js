@@ -1,11 +1,16 @@
+/**
+ * Module dependencies.
+ */
+
 var express = require('express'),
   session = require('express-session'),
   port = process.env.PORT || 3001,
-  app = express(),
   request = require('request'),
   cookieParser = require('cookie-parser'),
   passport = require("passport"),
   OAuth2Strategy = require("passport-oauth2");
+
+var app =  module.exports =express();
 
 var API_BASE_URL = 'https://api.fleetlog.com.au';
 var CLIENT_ID = process.env.FLEETLOG_CLIENT_ID || 'test';
@@ -18,13 +23,19 @@ passport.use(new OAuth2Strategy({
     clientID: CLIENT_ID,
     clientSecret: CLIENT_SECRET,
     callbackURL: "http://localhost:3001/redirect",
-    state: 'ah01'
+    state: true
   },
   function(accessToken, refreshToken, profile, done) {
     return done(null, {accessToken: accessToken});
   }
 ));
 
+
+// Passport session setup.
+//   To support persistent login sessions, Passport needs to be able to
+//   serialize users into and deserialize users out of the session.  Typically,
+//   this will be as simple as storing the user ID when serializing, and finding
+//   the user by ID when deserializing.
 passport.serializeUser(function(user, done) {
   done(null, user);
 });
@@ -33,13 +44,16 @@ passport.deserializeUser(function(id, done) {
   done(null, id);
 });
 
+// middleware
 
 app.use(cookieParser());
 app.use(session({
-  secret: 'keyboard cat',
-  resave: false,
-  saveUninitialized: true
+  resave: false, // don't save session if unmodified
+  saveUninitialized: false, // don't create session until something stored
+  secret: 'keyboard cat'
 }));
+// Initialize Passport!  Also use passport.session() middleware, to support
+// persistent login sessions (recommended).
 app.use(passport.initialize());
 app.use(passport.session());
 
@@ -50,7 +64,7 @@ app.get('/auth', passport.authenticate('oauth2'));
 
 app.get('/redirect',  passport.authenticate('oauth2', { successRedirect: '/welcome', failureRedirect: '/login' }),
   function(req, res) {
-    res.redirect('/welcome');
+    res.redirect('/');
   });
 
 

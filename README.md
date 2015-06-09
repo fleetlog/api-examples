@@ -10,12 +10,12 @@ and receiving API authorization codes that are routed through the user-agent.
 
 ### Install required modules
 ```
-    npm install
+npm install
 ```
 
 ### Run the app
 ```
-    node app FLEETLOG_CLIENT_ID=<YOUR_CLIENT_ID> FLEETLOG_CLIENT_SECRET=<YOUR_CLIENT_SECRET>
+node app FLEETLOG_CLIENT_ID=<YOUR_CLIENT_ID> FLEETLOG_CLIENT_SECRET=<YOUR_CLIENT_SECRET>
 ```
 
 Open `localhost:3001` in your browser.
