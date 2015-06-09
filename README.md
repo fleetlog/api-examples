@@ -8,12 +8,27 @@ where source code is not publicly exposed, and Client Secret confidentiality can
 This is a redirection-based flow, which means that the application must be capable of interacting with the user-agent (i.e. the user's web browser) 
 and receiving API authorization codes that are routed through the user-agent.
 
+###oauth2-resource-owner-password-credentials
+The resource owner password credentials grant type is suitable in cases where the resource owner has a trust relationship with the client, 
+such as the device operating system or a highly privileged application. 
+The authorization server should take special care when enabling this grant type and only allow it when other flows are not viable.
+
+This grant type is suitable for clients capable of obtaining the resource owner’s credentials (username and password, 
+typically using an interactive form). It is also used to migrate existing clients using 
+direct authentication schemes such as HTTP Basic or Digest authentication to OAuth by converting the stored credentials to an access token:
+
+References from the RFC:     
+[Resource Owner Password Credentials](http://tools.ietf.org/html/rfc6749#section-1.3.3)  
+[Resource Owner Password Credentials Grant](http://tools.ietf.org/html/rfc6749#section-4.3)
+
 ### Install required modules
 ```
 npm install
 ```
 
 ### Run the app
+Run the app with environment variables
+
 ```
 node app FLEETLOG_CLIENT_ID=<YOUR_CLIENT_ID> FLEETLOG_CLIENT_SECRET=<YOUR_CLIENT_SECRET>
 ```
