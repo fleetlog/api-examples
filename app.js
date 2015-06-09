@@ -13,7 +13,7 @@ var CLIENT_SECRET = process.env.FLEETLOG_CLIENT_SECRET || 'testsecret';
 
 
 passport.use(new OAuth2Strategy({
-    authorizationURL: 'https://fleetlog.com.au/connect',
+    authorizationURL: 'https://preview.fleetlog.com.au/connect',
     tokenURL: API_BASE_URL+'/v2/token',
     clientID: CLIENT_ID,
     clientSecret: CLIENT_SECRET,
