@@ -1,4 +1,6 @@
-#Fleetlog oAuth2 example
+#Fleetlog Examples
+
+###oAuth2-authorization-code
 Access to web APIs by native clients and websites is implemented by using the OAuth 2.0.
 
 The authorization code grant type is the most commonly used because it is optimized for server-side applications, 
