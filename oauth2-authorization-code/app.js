@@ -10,6 +10,14 @@ var express = require('express'),
   passport = require("passport"),
   OAuth2Strategy = require("passport-oauth2");
 
+/*
+ Example of the authorization code grant type
+
+ The authorization code flow is a "three-legged OAuth" configuration.
+ In this configuration, the user authenticates himself with the resource server
+ and gives the app consent to access his protected resources without divulging username/passwords to the client app.
+ */
+
 var app =  module.exports =express();
 
 var API_BASE_URL = 'https://api.fleetlog.com.au';

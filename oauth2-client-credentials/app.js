@@ -1,27 +1,20 @@
 var request = require('request');
 
 /*
- Example of the password grant type
+ Example of the client credentials grant type
 
- In this configuration, the user provides his resource server credentials (email/password) to the client app,
- which sends them in an access token request to the Fleetlog API.
-
- */
+ This grant type flow occurs strictly between a client app and the authorization server.
+ An end user does not participate in this grant type flow.
+*/
 
 var API_BASE_URL = 'https://api.fleetlog.com.au';
 var CLIENT_ID = process.env.FLEETLOG_CLIENT_ID || 'test';
 var CLIENT_SECRET = process.env.FLEETLOG_CLIENT_SECRET || 'clientsecret';
 
-var USERNAME = process.env.USERNAME || 'user@name.com';
-var PASSWORD = process.env.PASSWORD || 'secret';
-
 var auth_string = new Buffer(CLIENT_ID + ':' + CLIENT_SECRET).toString('base64');
 
-
 var payload = {};
-payload.grant_type = 'password';
-payload.password = PASSWORD;
-payload.username = USERNAME;
+payload.grant_type = 'client_credentials';
 
 
 request({
