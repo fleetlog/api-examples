@@ -1,6 +1,7 @@
 /**
  * Module dependencies.
  */
+var qs = require('querystring');
 
 var express = require('express'),
   session = require('express-session'),
@@ -13,6 +14,7 @@ var express = require('express'),
 var FleetlogSDK = require('../lib/Fleetlog');
 var Fleetlog = new FleetlogSDK();
 
+console.log(qs.stringify({type: ['peter', 'jano']}));
 /*
  Example of the authorization code grant type
 
@@ -90,7 +92,10 @@ app.get('/welcome', function (req, res) {
     Fleetlog.identity(function (err, userObject){
       if (err) {return res.send("ERROR")}
 
-      res.send('You are logged in.<br>User: '+userObject.data.email );
+      res.send('You are logged in.<br>User: '+userObject.email );
+    });
+    Fleetlog.getVehicles(null, function (err, vehicles){
+      if (err) {return res.send("ERROR")}
     });
   } else {
     res.redirect('/');
