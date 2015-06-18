@@ -10,6 +10,9 @@ var express = require('express'),
   passport = require("passport"),
   OAuth2Strategy = require("passport-oauth2");
 
+var FleetlogSDK = require('../lib/Fleetlog');
+var Fleetlog = new FleetlogSDK();
+
 /*
  Example of the authorization code grant type
 
@@ -20,13 +23,14 @@ var express = require('express'),
 
 var app =  module.exports =express();
 
-var API_BASE_URL = 'https://api.fleetlog.com.au';
+var API_BASE_URL = 'http://localhost:3000';
 var CLIENT_ID = process.env.FLEETLOG_CLIENT_ID || 'test';
 var CLIENT_SECRET = process.env.FLEETLOG_CLIENT_SECRET || 'testsecret';
 
 
 passport.use(new OAuth2Strategy({
-    authorizationURL: 'https://preview.fleetlog.com.au/connect',
+    //authorizationURL: 'https://dev.fleetlog.com.au/connect',
+    authorizationURL: 'http://localhost/fleetlog/www/connect',
     tokenURL: API_BASE_URL+'/v2/token',
     clientID: CLIENT_ID,
     clientSecret: CLIENT_SECRET,
@@ -69,18 +73,23 @@ app.use(passport.session());
 // Initial page redirecting to Fleetlog's oAuth page
 app.get('/auth', passport.authenticate('oauth2'));
 
-
-app.get('/redirect',  passport.authenticate('oauth2', { successRedirect: '/welcome', failureRedirect: '/login' }),
+app.get('/redirect', passport.authenticate('oauth2', { successRedirect: '/welcome', failureRedirect: '/login' }),
   function(req, res) {
     res.redirect('/');
   });
 
 
 app.get('/welcome', function (req, res) {
-  if(req.session.passport.user) {
-    request.get({ url: API_BASE_URL+'/v2/me', headers: {Authorization: "Bearer "+req.session.passport.user.accessToken}}, function(err, result, body) {
-      console.log(body)
-      res.send('You are logged in.<br>User: ' +  JSON.stringify(body));
+  //req.session.passport.user
+  var user = req.session.passport.user || {};
+  var token = process.env.TOKEN || user.accessToken;
+
+  if(token) {
+    Fleetlog.setAccessToken(token);
+    Fleetlog.identity(function (err, userObject){
+      if (err) {return res.send("ERROR")}
+
+      res.send('You are logged in.<br>User: '+userObject.data.email );
     });
   } else {
     res.redirect('/');
