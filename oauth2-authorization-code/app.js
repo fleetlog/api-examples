@@ -80,12 +80,13 @@ app.get('/redirect', passport.authenticate('oauth2', { successRedirect: '/welcom
 
 
 app.get('/welcome', function (req, res) {
-  //req.session.passport.user
   var user = req.session.passport.user || {};
-  var token = process.env.TOKEN || user.accessToken;
+  var token = process.env.TOKEN || user.accessToken; // DEV
 
   if(token) {
+    // Set access token to Fleetlog Node Client
     Fleetlog.setAccessToken(token);
+    // Get Identity
     Fleetlog.identity(function (err, userObject){
       if (err) {return res.send("ERROR")}
 
