@@ -20,7 +20,75 @@ fleetlog.identity(token, function (err, userObject){
 })
 ```
 
-## Examples
+## Methods
+### identity
+- identity(token ```string```, callback ```function```)
+```
+fleetlog.identity('access-token', function (err, userObject){
+  	console.log(userObject)  
+})
+```
+
+### getVehicles
+- identity(token ```string```, callback ```function```)
+```
+fleetlog.getVehicles('access-token', { limit: 5, offset: 0}, function (err, vehicles){
+  	console.log(vehiclesArray)  
+})
+```
+
+### getTrips
+- identity(token ```string```, query ```object```, callback ```function```)
+```
+fleetlog.getTrips('access-token', { limit: 5, offset: 0}, function (err, trips){
+  	console.log(tripsArray)  
+})
+```
+
+### getTrip
+- identity(token ```string```,  tripId ```number```, query ```object```,  callback ```function```)
+```
+fleetlog.getTrip('access-token', 12345, null, function (err, tripObject){
+  	console.log(tripObject)  
+})
+```
+
+### getVehicle
+- identity(token ```string```,  vehicleId ```number```, query ```object```,  callback ```function```)
+```
+fleetlog.getVehicle('access-token', 12345, null, function (err, vehicleObject){
+  	console.log(vehicleObject)  
+})
+```
+
+### getCoordinates
+- identity(token ```string```, query ```object```,  callback ```function```)
+```
+fleetlog.getCoordinates('access-token', { fields: ['latitude', 'longitude', 'id', 'datetime']}, function (err, coordinates){
+  	console.log(coordinatesArray)  
+})
+```
+
+### getTripWithCoordinates
+- identity(token ```string```, tripId ```number```, query ```object```,  callback ```function```)
+```
+fleetlog.getTripWithCoordinates('access-token', 12345, { coordinates: { fields: 'datetime'}}, function (err, tripObject){
+  	console.log(tripObject)  
+})
+```
+
+### Custom request
+- _fleetlogRequest(method ```string```, path ```string```, data ```object```, token ```string```, callback ```function```)
+```
+fleetlog._fleetlogRequest('GET', 'trips?limit=5&offset=0', null, 'access-token', function (err, response){
+	// Response object
+	// { "status": 200, data: [...]} or { "status": 200, data: {...}}
+  	console.log(response)  
+})
+```
+
+
+## Examples Apps
 In order to make authorized calls to Fleetlog API, 
 your application must first obtain an OAuth 2.0 access token on behalf 
 of a Fleetlog user or you could issue Application-only authenticated 
