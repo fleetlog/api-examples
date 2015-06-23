@@ -72,7 +72,7 @@ fleetlog.getCoordinates('access-token', { fields: ['latitude', 'longitude', 'id'
 ### getTripWithCoordinates
 - identity(token ```string```, tripId ```number```, query ```object```,  callback ```function```)
 ```
-fleetlog.getTripWithCoordinates('access-token', 12345, { coordinates: { fields: 'datetime'}}, function (err, tripObject){
+fleetlog.getTripWithCoordinates('access-token', 12345, { 'coordinates[fields]': 'datetime'}, function (err, tripObject){
   	console.log(tripObject)  
 })
 ```
