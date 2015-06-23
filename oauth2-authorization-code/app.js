@@ -91,11 +91,13 @@ app.get('/welcome', function (req, res) {
     // Get Identity
     Fleetlog.identity(function (err, userObject){
       if (err) {return res.send("ERROR")}
+      console.log(userObject)
 
       res.send('You are logged in.<br>User: '+userObject.email );
     });
     Fleetlog.getVehicles(null, function (err, vehicles){
       if (err) {return res.send("ERROR")}
+      console.log(vehicles)
     });
   } else {
     res.redirect('/');
