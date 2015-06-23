@@ -13,7 +13,7 @@ This SDK is designed to be the simplest way to make request to the Fleetlog API.
 var fleetlog = require('fleetlog');
 
 // see Examples for obtaining an access token.
-fleetlog.identity(token, function (err, userObject){
+fleetlog.identity('access-token', function (err, userObject){
   if (!error) {
   	console.log(userObject)  
   }
