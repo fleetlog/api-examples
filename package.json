@@ -1,7 +1,7 @@
 {
   "name": "fleetlog",
   "description": "Fleetlog API wrapper",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "keywords": [
     "fleetlog",
     "gps tracking",
