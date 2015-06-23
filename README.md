@@ -20,6 +20,10 @@ fleetlog.identity('access-token', function (err, userObject){
 })
 ```
 
+### API Docs
+http://docs.fleetlogapiv2.apiary.io/#
+
+
 ## Methods
 ### identity
 - identity(token ```string```, callback ```function```)
