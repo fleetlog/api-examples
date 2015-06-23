@@ -11,7 +11,7 @@ var express = require('express'),
   passport = require("passport"),
   OAuth2Strategy = require("passport-oauth2");
 
-var FleetlogSDK = require('../lib/Fleetlog');
+var FleetlogSDK = require('../../lib/Fleetlog');
 var Fleetlog = new FleetlogSDK();
 
 console.log(qs.stringify({type: ['peter', 'jano']}));
