@@ -11,10 +11,8 @@ var express = require('express'),
   passport = require("passport"),
   OAuth2Strategy = require("passport-oauth2");
 
-var FleetlogSDK = require('../../lib/Fleetlog');
-var Fleetlog = new FleetlogSDK();
+var fleetlog = require('../../lib/fleetlog');
 
-console.log(qs.stringify({type: ['peter', 'jano']}));
 /*
  Example of the authorization code grant type
 
@@ -23,16 +21,25 @@ console.log(qs.stringify({type: ['peter', 'jano']}));
  and gives the app consent to access his protected resources without divulging username/passwords to the client app.
  */
 
+var fleetlogRoutes = {
+  apiBaseURL: 'https://api.fleetlog.com.au',
+  authorizationURL: 'https://dev.fleetlog.com.au/connect'
+};
+
+if (process.env.NODE_ENV == 'dev') {
+  fleetlogRoutes.apiBaseURL = 'http://localhost:3000';
+  fleetlogRoutes.authorizationURL ='http://localhost/fleetlog/www/connect';
+}
+
 var app =  module.exports =express();
 
-var API_BASE_URL = 'http://localhost:3000';
+var API_BASE_URL = fleetlogRoutes.apiBaseURL;
 var CLIENT_ID = process.env.FLEETLOG_CLIENT_ID || 'test';
 var CLIENT_SECRET = process.env.FLEETLOG_CLIENT_SECRET || 'testsecret';
 
 
 passport.use(new OAuth2Strategy({
-    //authorizationURL: 'https://dev.fleetlog.com.au/connect',
-    authorizationURL: 'http://localhost/fleetlog/www/connect',
+    authorizationURL: fleetlogRoutes.authorizationURL,
     tokenURL: API_BASE_URL+'/v2/token',
     clientID: CLIENT_ID,
     clientSecret: CLIENT_SECRET,
@@ -75,9 +82,9 @@ app.use(passport.session());
 // Initial page redirecting to Fleetlog's oAuth page
 app.get('/auth', passport.authenticate('oauth2'));
 
-app.get('/redirect', passport.authenticate('oauth2', { successRedirect: '/welcome', failureRedirect: '/login' }),
+app.get('/redirect', passport.authenticate('oauth2', { failureRedirect: '/login' }),
   function(req, res) {
-    res.redirect('/');
+    res.redirect('/welcome');
   });
 
 
@@ -86,18 +93,16 @@ app.get('/welcome', function (req, res) {
   var token = process.env.TOKEN || user.accessToken; // DEV
 
   if(token) {
-    // Set access token to Fleetlog Node Client
-    Fleetlog.setAccessToken(token);
     // Get Identity
-    Fleetlog.identity(function (err, userObject){
+    fleetlog.identity(token, function (err, userObject){
       if (err) {return res.send("ERROR")}
       console.log(userObject)
 
       res.send('You are logged in.<br>User: '+userObject.email );
     });
-    Fleetlog.getVehicles(null, function (err, vehicles){
-      if (err) {return res.send("ERROR")}
-      console.log(vehicles)
+    fleetlog.getVehicles(token, null, function (err, vehicles){
+      //if (err) {return res.send("ERROR")}
+      console.log(err, vehicles)
     });
   } else {
     res.redirect('/');
