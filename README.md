@@ -124,7 +124,7 @@ References from the RFC:
 Run the app with environment variables
 
 ```
-node app FLEETLOG_CLIENT_ID=<YOUR_CLIENT_ID> FLEETLOG_CLIENT_SECRET=<YOUR_CLIENT_SECRET>
+ FLEETLOG_CLIENT_ID=<YOUR_CLIENT_ID> FLEETLOG_CLIENT_SECRET=<YOUR_CLIENT_SECRET> node app
 ```
 
 Open `localhost:3001` in your browser.
